@@ -1,19 +1,88 @@
-.root{
-  width: 100%;
-  height: 100%;
+.root {
+  padding: 24px;
+}
+.example {
+  margin: 24px 0;
+}
+h2 {
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+h3 {
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 16px;
+  margin: 16px 0;
+}
+.range {
   position: relative;
-  .range{
-    position: absolute;
-    left: 10%;
-    top: 10%;
-    width: 600px;
-    height: 300px;
-    background-color: #FF9987;
-  }
+  width: 400px;
+  height: 200px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  margin: 16px 0;
+  transition: all 0.3s;
 
-  .box{
-    width: 100px;
-    height: 100px;
-    background-color: rebeccapurple;
+  .controls {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 1;
+  }
+}
+.range:hover {
+  border-color: #1677ff;
+}
+.box {
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  transition: all 0.3s;
+
+  &.custom {
+    background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+    color: #fff;
+    border: none;
+
+    h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  }
+}
+.box:hover {
+  border-color: #1677ff;
+}
+button {
+  margin: 8px;
+  padding: 4px 15px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+button:hover {
+  color: #1677ff;
+  border-color: #1677ff;
+}
+.custom-floating {
+  .box {
+    min-width: 200px;
   }
 }
