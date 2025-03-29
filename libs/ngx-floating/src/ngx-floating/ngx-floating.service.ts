@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {Boundary, FloatingOffset, NgxFloatingComponent} from './ngx-floating.component';
 
-interface NgxFloatingServiceOptions {
+export interface NgxFloatingServiceOptions {
   at?: HTMLElement;
   content: TemplateRef<any> | Type<any> | string;
   movable?: boolean;
