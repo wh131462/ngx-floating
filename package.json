@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 8888 -o",
+    "play": "ng serve --port 8888 -o",
     "build": "ng build ngx-floating",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "prebuild:play": "npm run build",
+    "build:play": "ng build playground",
+    "predeploy": "npm run build:play",
+    "deploy": "ng deploy playground --base-href=/ngx-floating/",
+    "unpub": "npm unpublish ngx-floating --force --registry https://registry.npmjs.com",
+    "pub": "cd libs/ngx-floating && yarn version && cd ../../ && npm run build && pwd && cd dist/core-file-preview && npm publish --registry https://registry.npmjs.com"
   },
   "private": true,
   "dependencies": {

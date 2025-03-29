@@ -1,6 +1,19 @@
 {
   "name": "ngx-floating",
   "version": "0.0.1",
+  "author": {
+    "name": "wh131462",
+    "email": "wh131462@gmail.com",
+    "url": "https://github.com/wh131462"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wh131462/ngx-floating"
+  },
+  "bugs": {
+    "url": "https://github.com/wh131462/ngx-floating/issues"
+  },
+  "homepage": "https://wh131462.github.io/ngx-floating/",
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0"
