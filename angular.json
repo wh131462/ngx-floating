@@ -1,36 +1,36 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "libs",
   "projects": {
-    "ngx-floating": {
+    "playground": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "libs/playground",
+      "sourceRoot": "libs/playground/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ngx-floating",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
+            "outputPath": "dist/playground",
+            "index": "libs/playground/src/index.html",
+            "browser": "libs/playground/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "libs/playground/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "libs/playground/src/favicon.ico",
+              "libs/playground/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "libs/playground/src/styles.scss"
             ],
             "scripts": []
           },
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-floating:build:production"
+              "buildTarget": "playground:build:production"
             },
             "development": {
-              "buildTarget": "ngx-floating:build:development"
+              "buildTarget": "playground:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ngx-floating:build"
+            "buildTarget": "playground:build"
           }
         },
         "test": {
@@ -83,16 +83,49 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "libs/playground/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "libs/playground/src/favicon.ico",
+              "libs/playground/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "libs/playground/src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "ngx-floating": {
+      "projectType": "library",
+      "root": "libs/ngx-floating",
+      "sourceRoot": "libs/ngx-floating/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "libs/ngx-floating/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-floating/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ngx-floating/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "libs/ngx-floating/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

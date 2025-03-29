@@ -9,6 +9,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "paths": {
+      "ngx-floating": [
+        "./libs/ngx-floating/src"
+      ]
+    },
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,

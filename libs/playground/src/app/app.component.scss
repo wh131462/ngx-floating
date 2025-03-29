@@ -1,0 +1,19 @@
+.root{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .range{
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    width: 600px;
+    height: 300px;
+    background-color: #FF9987;
+  }
+
+  .box{
+    width: 100px;
+    height: 100px;
+    background-color: rebeccapurple;
+  }
+}
