@@ -11,13 +11,23 @@
   </section>
 
   <section class="example">
-    <h3>2. 服务用法</h3>
-    <div class="range" #at2>
-      <ng-template #at2Template>
-        <div class="box">通过服务创建的浮动组件</div>
-      </ng-template>
+    <h3>2. 指令用法</h3>
+    <div class="range" #directiveTarget>
+      <div class="box" [ngxFloating]="true" [movable]="isMovable" [at]="directiveTarget" [offset]="offset" [ignoreBoundary]="ignoreBoundary">
+        使用指令的浮动元素
+      </div>
       <div class="controls">
-        <button (click)="createFloating()">使用服务创建</button>
+        <button (click)="isMovable = !isMovable">{{ isMovable ? '禁用' : '启用' }}移动</button>
+        <button (click)="ignoreBoundary = !ignoreBoundary">{{ ignoreBoundary ? '启用' : '禁用' }}边界约束</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="example">
+    <h3>3. 服务用法</h3>
+    <div class="range" #at2>
+      <div class="box" #serviceContent>通过服务创建的浮动组件</div>
+      <div class="controls">
         <button (click)="toggleFloating()">显示/隐藏</button>
         <button (click)="destroyFloating()">销毁浮动组件</button>
       </div>
@@ -44,8 +54,8 @@
 
   <section class="example">
     <h3>4. 自定义样式</h3>
-    <div class="range" #at4>
-      <ngx-floating [at]="at4"  [offset]="{ top: 50, left: 50 , inner: true}" class="custom-floating">
+    <div class="range" #at4 [attr.data-movable]="false">
+      <ngx-floating [at]="at4" [movable]="at4.getAttribute('data-movable')!" [offset]="{ top: 50, left: 50 , inner: true}" class="custom-floating">
         <div class="box custom">
           <h4>自定义样式</h4>
           <p>可以通过CSS自定义浮动组件的样式</p>
@@ -60,13 +70,13 @@
       <div class="controls">
         <button (click)="toggleAllFloating()">显示/隐藏所有</button>
       </div>
-      <ngx-floating [at]="at5" [movable]="true" [offset]="{ top: 30, left: 30, inner: true }" #floating1>
+      <ngx-floating [at]="at5" [offset]="{ top: 30, left: 30 }" #floating1>
         <div class="box">浮动组件1</div>
       </ngx-floating>
-      <ngx-floating [at]="at5" [movable]="true" [offset]="{ top: 80, left: 80 , inner: true}" #floating2>
+      <ngx-floating [at]="at5" [offset]="{ top: 80, left: 80 }" #floating2>
         <div class="box">浮动组件2</div>
       </ngx-floating>
-      <ngx-floating [at]="at5" [movable]="true" [offset]="{ top: 130, left: 130 , inner: true}" #floating3>
+      <ngx-floating [at]="at5" [offset]="{ top: 130, left: 130 }" #floating3>
         <div class="box">浮动组件3</div>
       </ngx-floating>
     </div>
