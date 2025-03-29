@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "play": "ng serve --port 8888 -o",
+    "prebuild": "node scripts/common/copy.js ./README.md libs/ngx-floating/",
+    "postbuild": "node scripts/common/rm.js libs/ngx-floating//README.md",
     "build": "ng build ngx-floating",
     "prebuild:play": "npm run build",
     "build:play": "ng build playground",
