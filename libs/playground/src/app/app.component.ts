@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, ViewChildren, QueryList, TemplateRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { NgxFloatingComponent, NgxFloatingService, NgxFloatingDirective } from "ngx-floating";
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -7,6 +7,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
+import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     NzButtonModule,
     NzIconModule,
     NzCodeEditorModule,
-    FormsModule
+    FormsModule,
+    NzTooltipDirective
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -32,6 +34,14 @@ export class AppComponent implements AfterViewInit {
   isMovable = true;
   ignoreBoundary = false;
   offset = { top: 10, left: 10, inner: true };
+  showCodeMap: { [key: string]: boolean } = {
+    basic: false,
+    directive: false,
+    service: false,
+    position: false,
+    custom: false,
+    linkage: false
+  };
 
   codeMap = {
     basic: `<div class="range" #at1>
@@ -105,6 +115,10 @@ export class AppComponent implements AfterViewInit {
 
   selectTab(index: number) {
     this.selectedTabIndex = index;
+  }
+
+  toggleCode(key: string) {
+    this.showCodeMap[key] = !this.showCodeMap[key];
   }
 
   toggleAllFloating() {

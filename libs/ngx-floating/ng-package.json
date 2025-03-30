@@ -2,7 +2,8 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ngx-floating",
   "assets": [
-    "README.md"
+    "README.md",
+    "README_CN.md"
   ],
   "lib": {
     "entryFile": "./src/index.ts"

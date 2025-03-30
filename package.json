@@ -3,14 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+
     "preplay": "npm run build",
     "play": "ng serve --port 8888 -o",
-    "prebuild": "node scripts/common/copy.js ./README.md libs/ngx-floating/",
-    "postbuild": "node scripts/common/rm.js libs/ngx-floating//README.md",
+
+    "prebuild": "node scripts/common/copy.js ./README.md libs/ngx-floating/ && node scripts/common/copy.js ./README_CN.md libs/ngx-floating/",
     "build": "ng build ngx-floating",
+    "postbuild": "node scripts/common/rm.js libs/ngx-floating/README.md libs/ngx-floating/README_CN.md",
+
     "prebuild:play": "npm run build",
     "build:play": "ng build playground",
+
     "deploy": "ng deploy --base-href=/ngx-floating/",
+
     "unpub": "npm unpublish ngx-floating --force --registry https://registry.npmjs.com",
     "pub": "cd libs/ngx-floating && yarn version && cd ../../ && npm run build && cd dist/ngx-floating && npm publish --registry https://registry.npmjs.com"
   },
