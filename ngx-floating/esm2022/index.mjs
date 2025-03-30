@@ -1,0 +1,5 @@
+/*
+ * Public API Surface of ngx-floating
+ */
+export * from "./ngx-floating/index";
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9saWJzL25neC1mbG9hdGluZy9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFFSCxjQUFjLHNCQUFzQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBuZ3gtZmxvYXRpbmdcbiAqL1xuXG5leHBvcnQgKiBmcm9tIFwiLi9uZ3gtZmxvYXRpbmcvaW5kZXhcIjtcbiJdfQ==
