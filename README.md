@@ -12,7 +12,7 @@
     <a href="https://www.npmjs.com/package/ngx-floating">
       <img src="https://img.shields.io/npm/dm/ngx-floating.svg" alt="npm downloads">
     </a>
-    <a href="https://github.com/your-username/ngx-floating/blob/main/LICENSE">
+    <a href="https://raw.githubusercontent.com/wh131462/ngx-floating/refs/heads/master/LICENSE">
       <img src="https://img.shields.io/npm/l/ngx-floating.svg" alt="license">
     </a>
   </p>
