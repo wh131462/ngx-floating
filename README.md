@@ -1,6 +1,9 @@
 <div align="center">
-  <h1>NGX-Floating</h1>
+  <h1>NGX-FLOATING</h1>
   <p>A lightweight and powerful Angular floating UI solution with flexible positioning and draggable support.</p>
+  <p align="center">
+    <a href="README_CN.md">中文文档</a><span> | </span><span>English</span>
+  </p>
   
   <p align="center">
     <a href="https://www.npmjs.com/package/ngx-floating">
