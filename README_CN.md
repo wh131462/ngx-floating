@@ -2,7 +2,7 @@
   <h1>NGX-FLOATING</h1>
   <p>轻量强大的 Angular 浮动 UI 解决方案，支持灵活定位和拖拽功能。</p>
   <p align="center">
-   <span>中文</span> <span> | </span> <a href="README.md">English</a>
+   <span>中文文档</span> <span> | </span> <a href="README.md">English</a>
   </p>
   
   <p align="center">
