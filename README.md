@@ -181,4 +181,4 @@ Explore interactive examples at the [Demo Page](https://wh131462.github.io/ngx-f
 
 ## 📜 License
 
-MIT © 2023 [Eternal Heart](https://github.com/wh131462)
+MIT © 2025 [Eternal Heart](https://github.com/wh131462)
