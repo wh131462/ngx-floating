@@ -27,10 +27,16 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "libs/playground/src/favicon.ico",
-              "libs/playground/src/assets"
+              "libs/playground/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/monaco-editor/min/vs",
+                "output": "/assets/vs/"
+              }
             ],
             "styles": [
-              "libs/playground/src/styles.scss"
+              "libs/playground/src/styles.scss",
+              "node_modules/ng-zorro-antd/code-editor/style/index.min.css"
             ],
             "scripts": []
           },
@@ -94,6 +100,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     },

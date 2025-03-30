@@ -3,20 +3,21 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "preplay": "npm run build",
     "play": "ng serve --port 8888 -o",
     "prebuild": "node scripts/common/copy.js ./README.md libs/ngx-floating/",
     "postbuild": "node scripts/common/rm.js libs/ngx-floating//README.md",
     "build": "ng build ngx-floating",
     "prebuild:play": "npm run build",
     "build:play": "ng build playground",
-    "predeploy": "npm run build:play",
-    "deploy": "ng deploy playground --base-href=/ngx-floating/",
+    "deploy": "ng deploy --base-href=/ngx-floating/",
     "unpub": "npm unpublish ngx-floating --force --registry https://registry.npmjs.com",
-    "pub": "cd libs/ngx-floating && yarn version && cd ../../ && npm run build && pwd && cd dist/core-file-preview && npm publish --registry https://registry.npmjs.com"
+    "pub": "cd libs/ngx-floating && yarn version && cd ../../ && npm run build && cd dist/ngx-floating && npm publish --registry https://registry.npmjs.com"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
+    "@angular/cdk": "17.3.10",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
     "@angular/core": "^17.3.0",
@@ -24,6 +25,10 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@ctrl/tinycolor": "^4.1.0",
+    "monaco-editor": "^0.52.2",
+    "ng-zorro-antd": "^17.4.1",
+    "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
