@@ -11,8 +11,8 @@
     "skipLibCheck": true,
     "paths": {
       "ngx-floating": [
-        "./libs/ngx-floating/src",
-//        "./dist/ngx-floating"
+//        "./libs/ngx-floating/src",
+        "./dist/ngx-floating"
       ]
     },
     "esModuleInterop": true,

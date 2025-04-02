@@ -190,7 +190,6 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
    */
   hide() {
     this.isVisible = false;
-    console.log("隐藏浮动组件");
   }
 
   /**
@@ -259,7 +258,6 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
         (this.boundary.bottom ?? window.innerHeight) - (this.boundary.top || 0)
       );
     }
-    console.log(this.boundaryRect)
   }
 
   private applyPosition() {

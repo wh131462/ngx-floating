@@ -32,9 +32,18 @@
                 <div class="box">可移动的浮动框</div>
               </ngx-floating>
             </div>
+
+            <div class="range" #at2 [style.width.%]="currentWidth">
+              <ngx-floating [at]="at2" [boundary]="at2" [movable]="true"
+                            [offset]="{ right: 10, bottom: 10, inner: true}">
+                <div class="box">可移动的浮动框(可跟随)</div>
+              </ngx-floating>
+            </div>
+            <h3>调节宽度查看跟随效果</h3>
+            <nz-slider [(ngModel)]="currentWidth" [nzMin]="0" [nzMax]="100"></nz-slider>
           </div>
           @if (showCodeMap['basic']) {
-            <nz-code-editor [lang]="'html'" [ngModel]="codeMap.basic" [disabled]="true"></nz-code-editor>
+            <nz-code-editor  [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.basic" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -66,7 +75,7 @@
             </div>
           </div>
           @if (showCodeMap['directive']) {
-            <nz-code-editor [lang]="'html'" [ngModel]="codeMap.directive" [disabled]="true"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.directive" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -93,7 +102,7 @@
             </div>
           </div>
           @if (showCodeMap['service']) {
-            <nz-code-editor [lang]="'html'" [ngModel]="codeMap.service" [disabled]="true"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.service" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -142,7 +151,7 @@
             </div>
           </div>
           @if (showCodeMap['position']) {
-            <nz-code-editor [lang]="'html'" [ngModel]="codeMap.position" [disabled]="true"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.position" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -182,7 +191,7 @@
             </div>
           </div>
           @if (showCodeMap['custom']) {
-            <nz-code-editor [lang]="'html'" [ngModel]="codeMap.custom" [disabled]="true"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.custom" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
           }
         </section>
       </nz-card>

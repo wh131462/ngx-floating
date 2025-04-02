@@ -8,6 +8,7 @@ import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
+import {NzSliderComponent} from "ng-zorro-antd/slider";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
     NzIconModule,
     NzCodeEditorModule,
     FormsModule,
-    NzTooltipDirective
+    NzTooltipDirective,
+    NzSliderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -50,7 +52,7 @@ export class AppComponent implements AfterViewInit {
   </ngx-floating>
 </div>`,
     directive: `<div class="range" #directiveTarget>
-  <div class="box" [ngxFloating]="true" [movable]="isMovable" [at]="directiveTarget" [offset]="offset" [ignoreBoundary]="ignoreBoundary">
+  <div class="box" [ngxFloating]="isMovable" [at]="directiveTarget" [offset]="offset" [ignoreBoundary]="ignoreBoundary">
     使用指令的浮动元素
   </div>
   <div class="controls">
@@ -63,33 +65,42 @@ export class AppComponent implements AfterViewInit {
   </div>
 </div>`,
     service: `<div class="range" #at2>
-  <div class="box">通过服务创建的浮动组件</div>
   <div class="controls">
-    <button nz-button nzType="default" (click)="selectTab(0)">查看基础组件</button>
-    <button nz-button nzType="default" (click)="selectTab(1)">查看指令用法</button>
+    <button nz-button nzType="default" (click)="createByService(at2)">创建浮动内容</button>
+    <button nz-button nzType="default" (click)="controlServiceFloating('show')">显示</button>
+    <button nz-button nzType="default" (click)="controlServiceFloating('hide')">隐藏</button>
+    <button nz-button nzType="default" (click)="controlServiceFloating('reset')">重置</button>
+    <button nz-button nzType="default" (click)="controlServiceFloating('updatePosition')">更新位置</button>
   </div>
 </div>`,
     position: `<div class="range" #at3>
-  <ngx-floating [at]="at3" [boundary]="at3"  [offset]="{ top: 10, left: 10 , inner:true}">
+  <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ top: 10, left: 10 , inner:true}">
     <div class="box">左上角</div>
   </ngx-floating>
-  <ngx-floating [at]="at3" [boundary]="at3"  [offset]="{ top: 10, right: 10, inner:true }">
+  <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ top: 10, right: 10, inner:true }">
     <div class="box">右上角</div>
   </ngx-floating>
   <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ bottom: 10, left: 10 , inner:true}">
     <div class="box">左下角</div>
   </ngx-floating>
-  <ngx-floating [at]="at3"  [boundary]="at3"  [offset]="{ bottom: 10, right: 10 , inner:true}">
+  <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ bottom: 10, right: 10 , inner:true}">
     <div class="box">右下角</div>
   </ngx-floating>
 </div>`,
-    custom: `<div class="range" #at4 [attr.data-movable]="false">
-  <ngx-floating [at]="at4" [movable]="at4.getAttribute('data-movable')!" [offset]="{ top: 50, left: 50 , inner: true}" class="custom-floating">
+    custom: `<div class="range" #at5>
+  <ngx-floating #floatingCustom [at]="at5" [offset]="{ top: 50, left: 50 , inner: true}" class="custom-floating">
     <div class="box custom">
       <h4>自定义样式</h4>
       <p>可以通过CSS自定义浮动组件的样式</p>
     </div>
   </ngx-floating>
+  <div class="controls">
+    <button nz-button nzType="default" (click)="floatingCustom.movable = !floatingCustom.movable; ">{{ floatingCustom.movable ? "关闭" : "开启" }} 移动</button>
+    <button nz-button nzType="default" (click)="toggleFloatingCustomBoundary(floatingCustom,at5)">{{ floatingCustom.hasBoundary ? "关闭" : "开启" }} 边界</button>
+    <button nz-button nzType="default" (click)="floatingCustom.show()">显示</button>
+    <button nz-button nzType="default" (click)="floatingCustom.hide()">隐藏</button>
+    <button nz-button nzType="default" (click)="floatingCustom.reset()">重置</button>
+  </div>
 </div>`,
     linkage: `<div class="range" #at5>
   <div class="controls">
@@ -106,6 +117,8 @@ export class AppComponent implements AfterViewInit {
   </ngx-floating>
 </div>`
   };
+  currentWidth: number = 100;
+
 
 
   constructor(private floatingService: NgxFloatingService) {
@@ -136,8 +149,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   toggleFloatingCustomBoundary(custom: NgxFloatingComponent, boundary: HTMLElement) {
-    const newB = custom.hasBoundary ?document.documentElement : boundary ;
+    const newB = custom.hasBoundary ? document.documentElement : boundary;
     custom.updateBoundary(newB)
-    console.log("切换边界",custom.hasBoundary,  custom.boundary);
+    console.log("切换边界", custom.hasBoundary, custom.boundary);
   }
 }
