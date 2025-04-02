@@ -159,36 +159,12 @@ interface FloatingOffset {
 
 ---
 
-
 ## 🌐 Live Demo
 
 Explore interactive examples at the [Demo Page](https://wh131462.github.io/ngx-floating).
 
 ---
 
-## 🛠 Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/wh131462/ngx-floating.git
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the dev server:
-```bash
-npm start
-```
-
-4. Build the library:
-```bash
-npm run build
-```
-
----
 ## 📜 License
 
 MIT © 2025 [Eternal Heart](https://github.com/wh131462)

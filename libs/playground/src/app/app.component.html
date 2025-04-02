@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-links">
       <span class="header-link version-tag" nz-tooltip nzTooltipTitle="当前版本">
-        v{{version}}
+        v{{ version }}
       </span>
       <a href="https://github.com/wh131462/ngx-floating" target="_blank" class="header-link" nz-tooltip
          nzTooltipTitle="GitHub仓库">
@@ -35,23 +35,62 @@
                 <div class="box">可移动的浮动框</div>
               </ngx-floating>
             </div>
-
-            <div class="range" #at2 [style.width.%]="currentWidth">
-              <ngx-floating [at]="at2" [boundary]="at2" [movable]="true"
-                            [offset]="{ right: 10, bottom: 10, inner: true}">
-                <div class="box">可移动的浮动框(可跟随)</div>
-              </ngx-floating>
-            </div>
-            <h3>调节宽度查看跟随效果</h3>
-            <nz-slider [(ngModel)]="currentWidth" [nzMin]="0" [nzMax]="100"></nz-slider>
           </div>
           @if (showCodeMap['basic']) {
-            <nz-code-editor  [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.basic" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
+            <div class="example-code">
+              <nz-code-editor [ngModel]="codeMap['basic']" [nzEditorOption]="{readOnly: true}"></nz-code-editor>
+            </div>
           }
         </section>
       </nz-card>
     </nz-tab>
-
+    <nz-tab nzTitle="高级用法">
+      <nz-card class="demo-card">
+        <section class="example">
+          <div class="example-title">
+            <h3>模板引用方式</h3>
+            <span class="code-toggle" (click)="toggleCode('template')">
+              <i nz-icon [nzType]="showCodeMap['template'] ? 'eye-invisible' : 'eye'" nzTheme="outline"></i>
+            </span>
+          </div>
+          <div class="example-content" [hidden]="showCodeMap['template']">
+            <div class="range" #atTemplate>
+              <ng-template #floatingContent>
+                <div class="box">使用ng-template的浮动内容</div>
+              </ng-template>
+              <ngx-floating [at]="atTemplate" [boundary]="atTemplate" [movable]="true" [content]="floatingContent"
+                           [offset]="{ top: 10, left: 10, inner: true }">
+              </ngx-floating>
+            </div>
+          </div>
+          @if (showCodeMap['template']) {
+            <div class="example-code">
+              <nz-code-editor [ngModel]="codeMap['template']" [nzEditorOption]="{readOnly: true}"></nz-code-editor>
+            </div>
+          }
+        </section>
+        <section class="example">
+          <div class="example-title">
+            <h3>组件引用方式</h3>
+            <span class="code-toggle" (click)="toggleCode('component')">
+              <i nz-icon [nzType]="showCodeMap['component'] ? 'eye-invisible' : 'eye'" nzTheme="outline"></i>
+            </span>
+          </div>
+          <div class="example-content" [hidden]="showCodeMap['component']">
+            <div class="range" #atComponent>
+              <ngx-floating [at]="atComponent" [boundary]="atComponent" [movable]="true" [content]="content"
+                           [offset]="{ bottom: 10, right: 10, inner: true }">
+              </ngx-floating>
+            </div>
+          </div>
+          @if (showCodeMap['component']) {
+            <div class="example-code">
+              <nz-code-editor [ngModel]="codeMap['component']" [nzEditorOption]="{readOnly: true}"></nz-code-editor>
+            </div>
+          }
+        </section>
+      </nz-card>
+    </nz-tab>
     <nz-tab nzTitle="指令用法">
       <nz-card class="demo-card">
         <section class="example">
@@ -78,7 +117,7 @@
             </div>
           </div>
           @if (showCodeMap['directive']) {
-            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.directive" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.directive" [disabled]="true"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -94,9 +133,9 @@
             </span>
           </div>
           <div class="example-content" [hidden]="showCodeMap['service']">
-            <div class="range" #at2>
+            <div class="range" #atService>
               <div class="controls">
-                <button nz-button nzType="default" (click)="createByService(at2)">创建浮动内容</button>
+                <button nz-button nzType="default" (click)="createByService(atService)">创建浮动内容</button>
                 <button nz-button nzType="default" (click)="controlServiceFloating('show')">显示</button>
                 <button nz-button nzType="default" (click)="controlServiceFloating('hide')">隐藏</button>
                 <button nz-button nzType="default" (click)="controlServiceFloating('reset')">重置</button>
@@ -105,7 +144,7 @@
             </div>
           </div>
           @if (showCodeMap['service']) {
-            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.service" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.service" [disabled]="true"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -122,39 +161,40 @@
           </div>
           <div class="example-content" [hidden]="showCodeMap['position']">
             <h4>内部定位</h4>
-            <div class="range" #at3>
-              <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ top: 10, left: 10 , inner:true}">
+            <div class="range" #atPosition>
+              <ngx-floating [at]="atPosition" [boundary]="atPosition" [offset]="{ top: 10, left: 10 , inner:true}">
                 <div class="box">左上角</div>
               </ngx-floating>
-              <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ top: 10, right: 10, inner:true }">
+              <ngx-floating [at]="atPosition" [boundary]="atPosition" [offset]="{ top: 10, right: 10, inner:true }">
                 <div class="box">右上角</div>
               </ngx-floating>
-              <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ bottom: 10, left: 10 , inner:true}">
+              <ngx-floating [at]="atPosition" [boundary]="atPosition" [offset]="{ bottom: 10, left: 10 , inner:true}">
                 <div class="box">左下角</div>
               </ngx-floating>
-              <ngx-floating [at]="at3" [boundary]="at3" [offset]="{ bottom: 10, right: 10 , inner:true}">
+              <ngx-floating [at]="atPosition" [boundary]="atPosition" [offset]="{ bottom: 10, right: 10 , inner:true}">
                 <div class="box">右下角</div>
               </ngx-floating>
             </div>
             <h4>外部定位</h4>
-            <div class="range">
-              <div class="point" #at4></div>
-              <ngx-floating [at]="at4" [offset]="{ top: -50, left: -200 }">
+            <div class="range" [style.width.%]="currentOuterWidth">
+              <div class="point" #atRelative></div>
+              <ngx-floating [at]="atRelative" [offset]="{ top: -50, left: -200 }">
                 <div class="box">相对于左上角</div>
               </ngx-floating>
-              <ngx-floating [at]="at4" [offset]="{ top: -50, right: 200}">
+              <ngx-floating [at]="atRelative" [offset]="{ top: -50, right: 200}">
                 <div class="box">相对于右上角</div>
               </ngx-floating>
-              <ngx-floating [at]="at4" [offset]="{ bottom: 50, left: -200 }">
+              <ngx-floating [at]="atRelative" [offset]="{ bottom: 50, left: -200 }">
                 <div class="box">相对于左下角</div>
               </ngx-floating>
-              <ngx-floating [at]="at4" [offset]="{ bottom: 50, right: 200 }">
+              <ngx-floating [at]="atRelative" [offset]="{ bottom: 50, right: 200 }">
                 <div class="box">相对于右下角</div>
               </ngx-floating>
             </div>
+            <nz-slider [(ngModel)]="currentOuterWidth" [nzMin]="0" [nzMax]="100"></nz-slider>
           </div>
           @if (showCodeMap['position']) {
-            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.position" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.position" [disabled]="true"></nz-code-editor>
           }
         </section>
       </nz-card>
@@ -170,8 +210,8 @@
             </span>
           </div>
           <div class="example-content" [hidden]="showCodeMap['custom']">
-            <div class="range" #at5>
-              <ngx-floating #floatingCustom [at]="at5" [offset]="{ top: 50, left: 50 , inner: true}"
+            <div class="range" #atCustom>
+              <ngx-floating #floatingCustom [at]="atCustom" [offset]="{ top: 50, left: 50 , inner: true}"
                             class="custom-floating">
                 <div class="box custom">
                   <h4>自定义样式</h4>
@@ -184,7 +224,7 @@
                   移动
                 </button>
                 <button nz-button nzType="default"
-                        (click)="toggleFloatingCustomBoundary(floatingCustom,at5)">{{ floatingCustom.hasBoundary ? "关闭" : "开启" }}
+                        (click)="toggleFloatingCustomBoundary(floatingCustom,atCustom)">{{ floatingCustom.hasBoundary ? "关闭" : "开启" }}
                   边界
                 </button>
                 <button nz-button nzType="default" (click)="floatingCustom.show()">显示</button>
@@ -194,7 +234,7 @@
             </div>
           </div>
           @if (showCodeMap['custom']) {
-            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.custom" [disabled]="true" nzTheme="vs2015"></nz-code-editor>
+            <nz-code-editor [nzEditorOption]="{ language: 'html' }" [ngModel]="codeMap.custom" [disabled]="true"></nz-code-editor>
           }
         </section>
       </nz-card>

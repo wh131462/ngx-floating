@@ -51,11 +51,11 @@ export class NgxFloatingService {
     const component = componentRef.instance;
 
     // 设置组件属性
-    component.at = options.at;
     component.movable = options.movable || false;
+    component.at = options.at;
+    component.ignoreBoundary = options.ignoreBoundary || false;
     if (options.offset) component.offset = options.offset;
     if (options.boundary) component.boundary = options.boundary;
-    component.ignoreBoundary = options.ignoreBoundary || false;
 
     // 处理content
     if (options.content) {

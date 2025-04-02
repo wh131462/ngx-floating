@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   ElementRef,
   HostBinding,
@@ -64,16 +63,19 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   @Input() content?: TemplateRef<any> | Type<any> | string;
 
   @ViewChild("contentContainer", {read: ElementRef, static: true}) public contentContainer!: ElementRef;
-  get hasBoundary(){
+
+  get hasBoundary() {
     return this.boundary && this.boundary !== document.documentElement;
   }
+
   // 改为变量存储样式
   positionStyle: { [key: string]: string } = {position: 'fixed'};
   private relativePosition?: RelativePosition;
   private boundaryRect?: DOMRect;
   private floatRect?: DOMRect;
   private atRect?: DOMRect;
-  private observer: ResizeObserver;
+  private resizeObserver: ResizeObserver;
+  private mutationObserver: MutationObserver;
 
   @ViewChild('floatingRef', {static: true}) floatingRef!: ElementRef;
   @ViewChild('componentContainer', {read: ViewContainerRef}) componentContainer!: ViewContainerRef;
@@ -82,13 +84,22 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   private startX = 0;
   private startY = 0;
   private componentRef?: ComponentRef<any>;
+  private targetLeft = 0;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
-    private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    this.observer = new ResizeObserver(() => this.updatePosition());
+    this.resizeObserver = new ResizeObserver(() => this.updatePosition());
+    this.mutationObserver = new MutationObserver(() => {
+      if (this.at) {
+        const newOffsetLeft = this.at.offsetLeft;
+        if (newOffsetLeft !== this.targetLeft) {
+          this.targetLeft = newOffsetLeft;
+          this.updatePosition()
+        }
+      }
+    })
   }
 
   @HostBinding('style.cursor') get cursor() {
@@ -113,49 +124,6 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
     }
   }
 
-  isTemplateRef(content: any): content is TemplateRef<any> {
-    return content instanceof TemplateRef;
-  }
-
-  isComponent(content: any): content is Type<any> {
-    return typeof content === 'function';
-  }
-
-  isString(content: any): content is string {
-    return typeof content === 'string';
-  }
-
-  private renderComponent(component: Type<any>) {
-    if (this.componentRef) {
-      this.componentRef.destroy();
-    }
-
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    this.componentRef = this.componentContainer.createComponent(componentFactory);
-    this.cdr.detectChanges();
-  }
-
-  private validateOffset(offset: FloatingOffset) {
-    // 确保只能设置四个角落的位置
-    const hasTop = offset.top !== undefined;
-    const hasBottom = offset.bottom !== undefined;
-    const hasLeft = offset.left !== undefined;
-    const hasRight = offset.right !== undefined;
-
-    // 如果同时设置了上下或左右，保留第一个设置的值
-    if (hasTop && hasBottom) {
-      delete offset.bottom;
-    }
-    if (hasLeft && hasRight) {
-      delete offset.right;
-    }
-    // 如果没有设置任何位置，默认设置左上角
-    if (!hasTop && !hasBottom && !hasLeft && !hasRight) {
-      offset.top = 0;
-      offset.left = 0;
-    }
-    return offset;
-  }
 
   ngAfterViewInit() {
     this.initDragEvents();
@@ -166,7 +134,7 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   ngOnDestroy() {
-    this.observer.disconnect();
+    this.resizeObserver.disconnect();
     window.removeEventListener("scroll", this.updatePosition.bind(this));
     if (this.componentRef) {
       this.componentRef.destroy();
@@ -178,6 +146,7 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
     this.boundary = boundary;
     this.updatePosition();
   }
+
   /**
    * 显示浮动组件
    */
@@ -206,7 +175,50 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   updateFloatingPosition() {
     this.updatePosition();
   }
+
   // endregion
+
+  isTemplateRef(content: any): content is TemplateRef<any> {
+    return content instanceof TemplateRef;
+  }
+
+  isComponent(content: any): content is Type<any> {
+    return typeof content === 'function';
+  }
+
+  isString(content: any): content is string {
+    return typeof content === 'string';
+  }
+
+  private renderComponent(component: Type<any>) {
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
+    this.componentRef = this.componentContainer.createComponent(component)
+    this.updatePosition()
+  }
+
+  private validateOffset(offset: FloatingOffset) {
+    // 确保只能设置四个角落的位置
+    const hasTop = offset.top !== undefined;
+    const hasBottom = offset.bottom !== undefined;
+    const hasLeft = offset.left !== undefined;
+    const hasRight = offset.right !== undefined;
+
+    // 如果同时设置了上下或左右，保留第一个设置的值
+    if (hasTop && hasBottom) {
+      delete offset.bottom;
+    }
+    if (hasLeft && hasRight) {
+      delete offset.right;
+    }
+    // 如果没有设置任何位置，默认设置左上角
+    if (!hasTop && !hasBottom && !hasLeft && !hasRight) {
+      offset.top = 0;
+      offset.left = 0;
+    }
+    return offset;
+  }
 
   private initObserver() {
     const observeTargets = [
@@ -215,11 +227,20 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
       this.boundary instanceof HTMLElement ? this.boundary : document.body,
       document.body
     ].filter(Boolean);
-    window.addEventListener("scroll", this.updatePosition.bind(this))
-    observeTargets.forEach(target => this.observer.observe(target));
+    window.addEventListener("scroll", this.updatePosition.bind(this));
+    observeTargets.forEach(target => {
+      this.resizeObserver.observe(target);
+    });
+    this.mutationObserver.observe(this.at?.parentElement ?? document.documentElement, {
+      childList: true, // 监听子元素增删
+      attributes: true,
+      subtree: true     // 监听所有后代元素
+    });
   }
 
   private updatePosition() {
+    // 验证并规范化 offset 设置
+    this.offset = this.validateOffset(this.offset);
     this.calcRects();
     this.calcBoundaryRect();
     this.applyPosition();
@@ -264,9 +285,6 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
     this.positionStyle = {position: 'fixed'};
     const isInner = this.offset.inner || !this.at;
 
-    // 验证并规范化 offset 设置
-    this.offset = this.validateOffset(this.offset);
-
     // 如果存在相对位置，使用相对位置计算
     if (this.relativePosition) {
       // 水平定位
@@ -296,10 +314,10 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
         this.positionStyle['left'] = `${base + this.offset.left}px`;
         this.relativePosition = {...this.relativePosition ?? {}, left: this.offset.left};
       } else if (this.offset.right !== undefined) {
-        const base = this.atRect!.right;
-        const right = isInner ? this.offset.right : this.offset.right;
-        this.positionStyle['left'] = `${isInner ? base - right - this.floatRect!.width : base + right}px`;
-        this.relativePosition = {...this.relativePosition ?? {}, right: this.offset.right};
+        const base = isInner ? this.atRect!.right : this.atRect!.left;
+        const right = this.offset.right;
+        this.positionStyle['left'] = `${window.innerWidth - right - this.floatRect!.width}px`;
+        this.relativePosition = {...this.relativePosition ?? {}, right: right};
       }
 
       // 垂直定位
@@ -308,10 +326,10 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
         this.positionStyle['top'] = `${base + this.offset.top}px`;
         this.relativePosition = {...this.relativePosition, top: this.offset.top};
       } else if (this.offset.bottom !== undefined) {
-        const base = this.atRect!.bottom;
-        const bottom = isInner ? this.offset.bottom : this.offset.bottom;
-        this.positionStyle['top'] = `${isInner ? base - bottom - this.floatRect!.height : base + bottom}px`;
-        this.relativePosition = {...this.relativePosition, bottom: this.offset.bottom};
+        const base = isInner ? this.atRect!.bottom : this.atRect!.top;
+        const bottom = this.offset.bottom;
+        this.positionStyle['top'] = `${window.innerHeight - bottom - this.floatRect!.height}px`;
+        this.relativePosition = {...this.relativePosition, bottom: bottom};
       }
     }
   }
