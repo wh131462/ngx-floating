@@ -24,10 +24,11 @@
 
 - 🚀 **Lightweight** – No external dependencies  
 - 📦 **Multiple Usage Modes** – Component, Directive, or Service  
-- 🎯 **Flexible Positioning** – Dynamic alignment with boundary constraints  
-- 🖱️ **Drag & Drop Support** – Optional movable functionality  
-- 🔄 **Auto Boundary Detection** – Smart repositioning within containers  
-- 🎨 **Customizable Styling** – Full control over appearance and content  
+- 🎯 **Flexible Positioning** – Dynamic alignment with inner/outer positioning support
+- 🖱️ **Drag & Drop Support** – Optional movable functionality with boundary constraints
+- 🔄 **Auto Boundary Detection** – Smart repositioning within containers
+- 🎨 **Customizable Styling** – Full control over appearance and content
+- 🔧 **Responsive Design** – Automatically adjusts to container size changes
 
 ---
 
@@ -73,7 +74,8 @@ import { NgxFloatingComponent, NgxFloatingDirective } from 'ngx-floating';
   <div [ngxFloating]="true" 
        [movable]="true" 
        [at]="target" 
-       [offset]="{ top: 0, right: 0 }">
+       [offset]="{ top: 0, right: 0 }"
+       [ignoreBoundary]="false">
     Floating Content
   </div>
 </div>
@@ -114,15 +116,15 @@ export class YourComponent {
 ### `NgxFloatingComponent` / `NgxFloatingDirective`
 
 | Property         | Type                          | Default                  | Description                                                                 |
-|------------------|-------------------------------|--------------------------|-----------------------------------------------------------------------------|
-| `at`             | `HTMLElement`                 | Required                 | Target element for positioning                                              |
-| `movable`        | `boolean`                     | `false`                  | Enable drag-and-drop functionality                                         |
-| `offset`         | `FloatingOffset`              | `{ top: 0 }`             | Positioning offsets                                                        |
-| `boundary`       | `HTMLElement` \| `Boundary`   | `documentElement`        | Boundary element to constrain movement                                      |
-| `ignoreBoundary` | `boolean`                     | `false`                  | Disable boundary constraints                                               |
-| `zIndex`         | `number`                      | `2`                      | Z-index of the floating element                                            |
-| `isVisible`      | `boolean`                     | `true`                   | Control visibility                                                         |
-| `content`        | `TemplateRef` \| `Type` \| `string` | -                        | Content (Service mode only)                                                |
+|-----------------|-------------------------------|--------------------------|-----------------------------------------------------------------------------|
+| `at`           | `HTMLElement`                 | Required                 | Target element for positioning                                              |
+| `movable`      | `boolean`                     | `false`                  | Enable drag-and-drop functionality                                         |
+| `offset`       | `FloatingOffset`              | `{ top: 0 }`             | Positioning offsets                                                        |
+| `boundary`     | `HTMLElement`                 | `documentElement`        | Boundary element to constrain movement                                      |
+| `ignoreBoundary`| `boolean`                     | `false`                  | Disable boundary constraints                                               |
+| `zIndex`       | `number`                      | `2`                      | Z-index of the floating element                                            |
+| `isVisible`    | `boolean`                     | `true`                   | Control visibility                                                         |
+| `content`      | `TemplateRef` \| `Type` \| `string` | -                        | Content (Service mode only)                                                |
 
 #### `FloatingOffset` Interface
 
@@ -136,6 +138,14 @@ interface FloatingOffset {
 }
 ```
 
+### Component Instance Methods
+
+| Method      | Description                              |
+|------------|------------------------------------------|
+| `show()`   | Show the floating element                |
+| `hide()`   | Hide the floating element                |
+| `reset()`  | Reset position to initial state          |
+
 ### `NgxFloatingService` Methods
 
 | Method     | Parameters                      | Description                              |
@@ -146,6 +156,13 @@ interface FloatingOffset {
 | `hide`     | `(id: string)`                  | Hide the floating element                |
 | `reset`    | `(id: string)`                  | Reset position to initial state          |
 | `get`      | `(id: string)`                  | Retrieve a floating instance by ID       |
+
+---
+
+
+## 🌐 Live Demo
+
+Explore interactive examples at the [Demo Page](https://wh131462.github.io/ngx-floating).
 
 ---
 
@@ -172,13 +189,6 @@ npm run build
 ```
 
 ---
-
-## 🌐 Live Demo
-
-Explore interactive examples at the [Demo Page](https://wh131462.github.io/ngx-floating).
-
----
-
 ## 📜 License
 
 MIT © 2025 [Eternal Heart](https://github.com/wh131462)

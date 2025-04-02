@@ -196,5 +196,146 @@
         </section>
       </nz-card>
     </nz-tab>
+
   </nz-tabset>
+
+  <nz-card class="api-card">
+    <section class="api">
+      <div class="api-title">
+        <h3>组件 API</h3>
+      </div>
+      <div class="api-content">
+        <h4>属性</h4>
+        <table>
+          <thead>
+          <tr>
+            <th>属性名</th>
+            <th>类型</th>
+            <th>默认值</th>
+            <th>说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>at</td>
+            <td>HTMLElement</td>
+            <td>必填</td>
+            <td>目标定位元素</td>
+          </tr>
+          <tr>
+            <td>movable</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>是否可拖拽</td>
+          </tr>
+          <tr>
+            <td>offset</td>
+            <td>FloatingOffset</td>
+            <td>&#123; top: 0 &#125;</td>
+            <td>位置偏移配置</td>
+          </tr>
+          <tr>
+            <td>boundary</td>
+            <td>HTMLElement</td>
+            <td>documentElement</td>
+            <td>移动边界元素</td>
+          </tr>
+          <tr>
+            <td>ignoreBoundary</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>是否忽略边界约束</td>
+          </tr>
+          <tr>
+            <td>zIndex</td>
+            <td>number</td>
+            <td>2</td>
+            <td>浮动元素的层级</td>
+          </tr>
+          <tr>
+            <td>isVisible</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>控制可见性</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <h4>方法</h4>
+        <table>
+          <thead>
+          <tr>
+            <th>方法名</th>
+            <th>说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>show()</td>
+            <td>显示浮动元素</td>
+          </tr>
+          <tr>
+            <td>hide()</td>
+            <td>隐藏浮动元素</td>
+          </tr>
+          <tr>
+            <td>reset()</td>
+            <td>重置位置到初始状态</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="api">
+      <div class="api-title">
+        <h3>服务 API</h3>
+      </div>
+      <div class="api-content">
+        <h4>方法</h4>
+        <table>
+          <thead>
+          <tr>
+            <th>方法名</th>
+            <th>参数</th>
+            <th>说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>create</td>
+            <td>(id: string, options: NgxFloatingServiceOptions)</td>
+            <td>创建浮动实例</td>
+          </tr>
+          <tr>
+            <td>destroy</td>
+            <td>(id: string)</td>
+            <td>销毁浮动实例</td>
+          </tr>
+          <tr>
+            <td>show</td>
+            <td>(id: string)</td>
+            <td>显示浮动元素</td>
+          </tr>
+          <tr>
+            <td>hide</td>
+            <td>(id: string)</td>
+            <td>隐藏浮动元素</td>
+          </tr>
+          <tr>
+            <td>reset</td>
+            <td>(id: string)</td>
+            <td>重置位置到初始状态</td>
+          </tr>
+          <tr>
+            <td>get</td>
+            <td>(id: string)</td>
+            <td>获取浮动实例</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </nz-card>
+
 </div>

@@ -191,3 +191,66 @@
     margin-top: 16px;
   }
 }
+
+.api-card {
+  max-width: 1200px;
+  margin: 24px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .api {
+    padding: 24px;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .api-title {
+      margin-bottom: 24px;
+
+      h3 {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0;
+        color: #262626;
+      }
+    }
+
+    .api-content {
+      h4 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 24px 0 16px;
+        color: #595959;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+
+        th, td {
+          padding: 12px 16px;
+          text-align: left;
+          border: 1px solid #f0f0f0;
+        }
+
+        th {
+          background: #fafafa;
+          font-weight: 500;
+          color: #262626;
+        }
+
+        td {
+          color: #595959;
+        }
+
+        tr:hover td {
+          background: #fafafa;
+        }
+      }
+    }
+  }
+}
