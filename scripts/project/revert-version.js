@@ -10,4 +10,4 @@ export const VERSION = 'dev';
 `;
 
 fs.writeFileSync(versionFilePath, versionFileContent, 'utf8');
-console.log(`Version revert to ${version}`);
+console.log(`Version revert to origin version`);
