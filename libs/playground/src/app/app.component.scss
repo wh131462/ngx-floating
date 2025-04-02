@@ -15,6 +15,13 @@
   .header-content {
     text-align: center;
     margin-top: 16px;
+    h1 {
+      margin: 0;
+      font-size: 48px;
+      font-weight: bold;
+      color: #1890ff;
+
+    }
   }
 
   .header-links {
@@ -23,6 +30,15 @@
     right: 24px;
     display: flex;
     gap: 16px;
+    
+    .version-tag {
+      font-size: 14px;
+      color: #1890ff;
+      background: rgba(24, 144, 255, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
 
     .header-link {
       display: flex;
@@ -34,7 +50,8 @@
       &:hover {
         background: #f5f5f5;
         transform: scale(1.1);
-      }
+      }      
+      
 
       .github-icon {
         width: 28px;

@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {NgxFloatingComponent, NgxFloatingDirective, NgxFloatingService} from "ngx-floating";
+import {VERSION} from "ngx-floating";
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -30,6 +31,7 @@ import {NzSliderComponent} from "ng-zorro-antd/slider";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+  version = VERSION;
   @ViewChild('directiveTarget') directiveTarget!: ElementRef;
   @ViewChildren('floating1, floating2, floating3') floatingComponents!: QueryList<NgxFloatingComponent>;
   selectedTabIndex = 0;
