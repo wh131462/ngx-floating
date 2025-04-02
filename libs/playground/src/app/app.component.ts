@@ -1,11 +1,11 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import { NgxFloatingComponent, NgxFloatingService, NgxFloatingDirective } from "ngx-floating";
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
-import { CommonModule } from '@angular/common';
+import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {NgxFloatingComponent, NgxFloatingDirective, NgxFloatingService} from "ngx-floating";
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
+import {NzCardModule} from 'ng-zorro-antd/card';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {NzCodeEditorModule} from 'ng-zorro-antd/code-editor';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
 
@@ -33,7 +33,7 @@ export class AppComponent implements AfterViewInit {
   selectedTabIndex = 0;
   isMovable = true;
   ignoreBoundary = false;
-  offset = { top: 10, left: 10, inner: true };
+  offset = {top: 10, left: 10, inner: true};
   showCodeMap: { [key: string]: boolean } = {
     basic: false,
     directive: false,
@@ -108,7 +108,8 @@ export class AppComponent implements AfterViewInit {
   };
 
 
-  constructor(private floatingService: NgxFloatingService) {}
+  constructor(private floatingService: NgxFloatingService) {
+  }
 
   ngAfterViewInit() {
   }
@@ -121,17 +122,22 @@ export class AppComponent implements AfterViewInit {
     this.showCodeMap[key] = !this.showCodeMap[key];
   }
 
-  toggleAllFloating() {
-    const components = this.floatingComponents.toArray();
-    const allVisible = components.every(comp => comp.isVisible);
-
-    components.forEach(comp => {
-      if (allVisible) {
-        comp.hide();
-      } else {
-        comp.show();
-      }
+  createByService(at: HTMLElement) {
+    this.floatingService.create('service-floating', {
+      movable: true,
+      at: at,
+      offset: {top: 0, left: 0, inner: true},
+      content: "服务创建的浮动组件"
     });
   }
 
+  controlServiceFloating(directive: 'show' | 'hide' | 'reset' | 'updatePosition') {
+    this.floatingService[directive]('service-floating');
+  }
+
+  toggleFloatingCustomBoundary(custom: NgxFloatingComponent, boundary: HTMLElement) {
+    const newB = custom.hasBoundary ?document.documentElement : boundary ;
+    custom.updateBoundary(newB)
+    console.log("切换边界",custom.hasBoundary,  custom.boundary);
+  }
 }

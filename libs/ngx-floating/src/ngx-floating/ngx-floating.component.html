@@ -4,7 +4,7 @@
     [ngStyle]="positionStyle"
     [style.z-index]="zIndex"
     class="ngx-floating">
-    <div class="content">
+    <div class="content" #contentContainer>
         <ng-container *ngIf="!content">
             <ng-content></ng-content>
         </ng-container>

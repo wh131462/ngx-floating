@@ -41,6 +41,7 @@ export class NgxFloatingService {
   create(id: string, options: NgxFloatingServiceOptions) {
     if (this.floatingComponents.has(id)) {
       console.warn(`浮动组件 ${id} 已存在`);
+      return this.floatingComponents.get(id)!.instance;
     }
 
     // 创建组件工厂
@@ -48,21 +49,31 @@ export class NgxFloatingService {
     // 创建组件
     const componentRef = componentFactory.create(this.injector);
     const component = componentRef.instance;
+
     // 设置组件属性
     component.at = options.at;
     component.movable = options.movable || false;
     if (options.offset) component.offset = options.offset;
     if (options.boundary) component.boundary = options.boundary;
     component.ignoreBoundary = options.ignoreBoundary || false;
-    component.content = options.content;
 
-    // 将组件添加到ApplicationRef
-    this.appRef.attachView(componentRef.hostView);
+    // 处理content
+    if (options.content) {
+      if (typeof options.content === 'string') {
+        const div = document.createElement('div');
+        div.innerHTML = options.content;
+        component.contentContainer.nativeElement.appendChild(div);
+      } else {
+        component.content = options.content;
+      }
+    }
 
-    // 将组件添加到DOM
+    // 将组件添加到DOM和ApplicationRef
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
     document.body.appendChild(domElem);
+    this.appRef.attachView(componentRef.hostView);
 
+    // 存储组件引用
     this.floatingComponents.set(id, componentRef);
     return component;
   }

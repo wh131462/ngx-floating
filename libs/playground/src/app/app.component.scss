@@ -125,6 +125,15 @@
   border-radius: 8px;
   transition: all 0.3s;
 
+  .point{
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: violet;
+    position: relative;
+    margin: 100px auto;
+  }
+
   .controls {
     position: absolute;
     bottom: 16px;
