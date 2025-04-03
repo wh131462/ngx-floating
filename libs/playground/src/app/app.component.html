@@ -42,6 +42,31 @@
             </div>
           }
         </section>
+        <section class="example">
+          <div class="example-title">
+            <h3>拖拽句柄用法</h3>
+            <span class="code-toggle" (click)="toggleCode('handler')">
+      <i nz-icon [nzType]="showCodeMap['handler'] ? 'eye-invisible' : 'eye'" nzTheme="outline"></i>
+    </span>
+          </div>
+          <div class="example-content" [hidden]="showCodeMap['handler']">
+            <div class="range" #atHandler>
+              <ngx-floating [at]="atHandler" [boundary]="atHandler" [movable]="true"
+                            [handler]="'.drag-handle'"
+                            [offset]="{ right: 10, bottom: 10, inner: true}">
+                <div class="box">
+                  <div class="drag-handle">🎮 拖拽这里（handler演示）</div>
+                  <div>其他不可拖拽内容</div>
+                </div>
+              </ngx-floating>
+            </div>
+          </div>
+          @if (showCodeMap['handler']) {
+            <div class="example-code">
+              <nz-code-editor [ngModel]="codeMap['handler']" [nzEditorOption]="{readOnly: true}"></nz-code-editor>
+            </div>
+          }
+        </section>
       </nz-card>
     </nz-tab>
     <nz-tab nzTitle="高级用法">
@@ -102,6 +127,14 @@
           </div>
           <div class="example-content" [hidden]="showCodeMap['directive']">
             <div class="range" #directiveTarget>
+              <div class="box" [ngxFloating]="isMovable" [at]="directiveTarget"
+                   [offset]="offset" [ignoreBoundary]="ignoreBoundary"
+                   [handler]="'#directiveHandle'">
+                <div id="directiveHandle" style="cursor: move; background: #f0f0f0; padding: 8px;">
+                  🖱️ 指令拖拽区域
+                </div>
+                <div>内容区域（不可拖拽）</div>
+              </div>
               <div class="box" [ngxFloating]="isMovable" [at]="directiveTarget" [offset]="offset"
                    [ignoreBoundary]="ignoreBoundary">
                 使用指令的浮动元素
@@ -264,6 +297,12 @@
             <td>HTMLElement</td>
             <td>必填</td>
             <td>目标定位元素</td>
+          </tr>
+          <tr>
+            <td>handler</td>
+            <td>string | HTMLElement</td>
+            <td>undefined</td>
+            <td>拖拽句柄元素选择器或DOM元素，未设置时整个组件可拖拽</td>
           </tr>
           <tr>
             <td>movable</td>

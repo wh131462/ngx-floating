@@ -100,7 +100,24 @@
     padding: 24px;
   }
 }
+/* 添加拖拽句柄样式 */
+.drag-handle {
+  cursor: move;
+  background: #1890ff20;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: all 0.3s;
 
+  &:hover {
+    background: #1890ff30;
+  }
+}
+
+#directiveHandle {
+  border: 1px dashed #1890ff;
+  margin-bottom: 12px;
+}
 .example {
   margin-bottom: 32px;
 

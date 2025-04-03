@@ -50,6 +50,7 @@ export interface RelativePosition {
 export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input({transform: (value: string | boolean) => (typeof value == 'boolean' ? value : value === 'true' || value === 'movable')})
   movable = false;
+  @Input() handler?: string | HTMLElement;
   /**
    * 目标元素，用于定位浮动组件的位置。
    * 如果不设置，浮动组件将以整个窗口作为参考对象。
@@ -76,7 +77,8 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   private atRect?: DOMRect;
   private resizeObserver: ResizeObserver;
   private mutationObserver: MutationObserver;
-
+// 在类中添加私有变量存储handler元素
+  private handlerElement?: HTMLElement;
   @ViewChild('floatingRef', {static: true}) floatingRef!: ElementRef;
   @ViewChild('componentContainer', {read: ViewContainerRef}) componentContainer!: ViewContainerRef;
 
@@ -103,7 +105,7 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   @HostBinding('style.cursor') get cursor() {
-    return this.movable ? 'move' : 'default';
+    return this.handler ? 'default' : (this.movable ? 'move' : 'default');
   }
 
   @HostBinding('style.visibility')
@@ -116,7 +118,11 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
     if (needsUpdate) {
       this.updatePosition();
     }
-
+    if (changes['handler']) {
+      this.resolveHandlerElement();
+      // 需要重新绑定事件，此处简单重新初始化
+      this.initDragEvents();
+    }
     if (changes['content'] && this.content) {
       if (this.isComponent(this.content)) {
         this.renderComponent(this.content as Type<any>);
@@ -384,14 +390,28 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   private initDragEvents() {
+    this.resolveHandlerElement();
+    const dragElement = this.handlerElement || this.floatingRef.nativeElement;
+    this.renderer.listen(dragElement, 'mousedown', (e: MouseEvent) => this.onMouseDown(e));
     const floatingElement = this.floatingRef.nativeElement;
     this.renderer.listen(floatingElement, 'mousedown', (e: MouseEvent) => this.onMouseDown(e));
     this.renderer.listen(document, 'mousemove', (e: MouseEvent) => this.onMouseMove(e));
     this.renderer.listen(document, 'mouseup', () => this.onMouseUp());
   }
 
+  private resolveHandlerElement() {
+    if (!this.handler) {
+      this.handlerElement = undefined;
+      return;
+    }
+    if (typeof this.handler === 'string') {
+      this.handlerElement = this.floatingRef.nativeElement.querySelector(this.handler) || undefined;
+    } else {
+      this.handlerElement = this.handler;
+    }
+  }
   private onMouseDown(event: MouseEvent) {
-    if (!this.movable) return;
+    if (!this.movable || !this.isEventInHandler(event)) return;
     this.isDragging = true;
 
     // 记录鼠标相对于元素的偏移量
@@ -400,6 +420,12 @@ export class NgxFloatingComponent implements AfterViewInit, OnChanges, OnDestroy
     this.startY = event.clientY - rect.top;
 
     event.preventDefault();
+  }
+// 新增辅助方法判断事件目标
+  private isEventInHandler(event: MouseEvent): boolean {
+    if (!this.handlerElement) return true; // 没有handler时允许整个元素拖拽
+    let target = event.target as HTMLElement;
+    return this.handlerElement.contains(target);
   }
 
   private onMouseMove(event: MouseEvent) {

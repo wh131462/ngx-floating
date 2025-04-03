@@ -7,6 +7,7 @@ import { NgxFloatingComponent } from './ngx-floating.component';
 })
 export class NgxFloatingDirective implements OnInit, OnChanges, OnDestroy {
   @Input("ngxFloating") movable: boolean = false;
+  @Input() handler?: string | HTMLElement;
   @Input() at?: HTMLElement;
   @Input() offset: any;
   @Input() boundary: any;
@@ -54,7 +55,7 @@ export class NgxFloatingDirective implements OnInit, OnChanges, OnDestroy {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NgxFloatingComponent);
     this.componentRef = componentFactory.create(this.injector);
     this.floatingComponent = this.componentRef.instance;
-
+    this.floatingComponent.handler = this.handler;
     this.floatingComponent.at = this.at || this.elementRef.nativeElement;
     this.floatingComponent.movable = this.movable;
     if (this.offset) this.floatingComponent.offset = this.offset;

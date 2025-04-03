@@ -46,7 +46,8 @@ export class AppComponent implements AfterViewInit {
     custom: false,
     linkage: false,
     template: false,
-    component: false
+    component: false,
+    handler: false
   };
 
   codeMap = {
@@ -57,7 +58,17 @@ export class AppComponent implements AfterViewInit {
     <div class="box">可移动的浮动框</div>
   </ngx-floating>
 </div>`,
-
+    // 拖拽句柄用法
+    handler: `<div class="range" #atHandler>
+  <ngx-floating [at]="atHandler" [boundary]="atHandler" [movable]="true"
+               [handler]="'.drag-handle'"
+               [offset]="{ right: 10, bottom: 10, inner: true}">
+    <div class="box">
+      <div class="drag-handle">🎮 拖拽这里</div>
+      <div>其他不可拖拽内容</div>
+    </div>
+  </ngx-floating>
+</div>`,
     // 使用ng-template模板引用方式
     template: `<div class="range" #at2>
   <!-- 定义模板内容 -->
@@ -78,6 +89,12 @@ export class AppComponent implements AfterViewInit {
 
     // 指令用法：将普通元素转换为浮动元素
     directive: `<div class="range" #directiveTarget>
+    <div class="box" [ngxFloating]="isMovable" [at]="directiveTarget"
+       [offset]="offset" [ignoreBoundary]="ignoreBoundary"
+       [handler]="'#directiveHandle'">
+    <div id="directiveHandle">🖱️ 指令拖拽区域</div>
+    <div>内容区域（不可拖拽）</div>
+  </div>
   <!-- 使用ngxFloating指令，支持动态控制移动和边界约束 -->
   <div class="box" [ngxFloating]="isMovable" [at]="directiveTarget" [offset]="offset" [ignoreBoundary]="ignoreBoundary">
     使用指令的浮动元素

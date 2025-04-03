@@ -13,6 +13,7 @@ import {Boundary, FloatingOffset, NgxFloatingComponent} from './ngx-floating.com
 export interface NgxFloatingServiceOptions {
   at?: HTMLElement;
   content: TemplateRef<any> | Type<any> | string;
+  handler?: string | HTMLElement;
   movable?: boolean;
   offset?: FloatingOffset;
   boundary?: Boundary;
@@ -52,6 +53,7 @@ export class NgxFloatingService {
 
     // 设置组件属性
     component.movable = options.movable || false;
+    component.handler = options.handler;
     component.at = options.at;
     component.ignoreBoundary = options.ignoreBoundary || false;
     if (options.offset) component.offset = options.offset;
