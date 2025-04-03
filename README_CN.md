@@ -60,8 +60,10 @@ import { NgxFloatingComponent, NgxFloatingDirective } from 'ngx-floating';
   <ngx-floating 
     [at]="target" 
     [movable]="true" 
+    [handler]="'.drag-handle'" 
     [offset]="{ right: 10, bottom: 10, inner: true }" 
     [boundary]="target">
+    <div class="drag-handle">拖拽区域</div>
     <div>浮动内容</div>
   </ngx-floating>
 </div>
@@ -119,6 +121,7 @@ export class YourComponent {
 |--------------|-------------------------------|-------------------------|---------------------------------------------------------------------|
 | `at`         | `HTMLElement`                 | 必填                    | 定位目标元素                                                        |
 | `movable`    | `boolean`                     | `false`                 | 启用拖拽功能                                                        |
+| `handler`    | `string` \| `HTMLElement`      | -                       | 拖拽触发区域的元素或 CSS 选择器                                      |
 | `offset`     | `FloatingOffset`              | `{ top: 0 }`            | 定位偏移量                                                          |
 | `boundary`   | `HTMLElement`                 | `documentElement`       | 限制移动范围的边界元素                                              |
 | `ignoreBoundary`| `boolean`                   | `false`                 | 忽略边界限制                                                        |

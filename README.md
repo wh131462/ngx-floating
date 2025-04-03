@@ -60,8 +60,10 @@ import { NgxFloatingComponent, NgxFloatingDirective } from 'ngx-floating';
   <ngx-floating 
     [at]="target" 
     [movable]="true" 
+    [handler]="'.drag-handle'" 
     [offset]="{ right: 10, bottom: 10, inner: true }" 
     [boundary]="target">
+    <div class="drag-handle">Drag Here</div>
     <div>Floating Content</div>
   </ngx-floating>
 </div>
@@ -119,6 +121,7 @@ export class YourComponent {
 |-----------------|-------------------------------|--------------------------|-----------------------------------------------------------------------------|
 | `at`           | `HTMLElement`                 | Required                 | Target element for positioning                                              |
 | `movable`      | `boolean`                     | `false`                  | Enable drag-and-drop functionality                                         |
+| `handler`      | `string` \| `HTMLElement`      | -                        | Drag handle element or CSS selector for drag trigger area                   |
 | `offset`       | `FloatingOffset`              | `{ top: 0 }`             | Positioning offsets                                                        |
 | `boundary`     | `HTMLElement`                 | `documentElement`        | Boundary element to constrain movement                                      |
 | `ignoreBoundary`| `boolean`                     | `false`                  | Disable boundary constraints                                               |
